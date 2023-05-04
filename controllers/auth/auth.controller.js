@@ -62,7 +62,7 @@ export const signup=async(req,res)=>{
 
 export const otpVerify = async (req,res)=>{
   try{
-    let data;
+    let data; 
     // const type = typeof(req.body.otp)
     console.log(req.body);
     // console.log(type,'..................');
@@ -71,7 +71,7 @@ export const otpVerify = async (req,res)=>{
       const user = await User.findOne({ number: req.body.number });
       console.log(user);
         
-
+  
       if (user) {
 
         const data = await bcrypt.compare(req.body.otp, user.password);
