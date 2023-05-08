@@ -2,13 +2,13 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv';
 import multer from 'multer';
-import morgan from 'morgan'; 
+import morgan from 'morgan';
 import path from 'path';
-import {fileURLToPath} from 'url'
+import { fileURLToPath } from 'url'
 import routeruser from './routes/router_user.js'
 import routerAdmin from './routes/router_admin.js'
 import connectDB from './config/db.js'
-import { Server  } from "socket.io";
+import { Server } from "socket.io";
 
 
 
@@ -24,12 +24,14 @@ connectDB()
 const app = express()
 app.use(express.json())
 app.use(morgan('tiny'))
-app.use(express.urlencoded({limit:"30mb", extended :true}))
+app.use(express.urlencoded({ limit: "30mb", extended: true }))
 app.use(cors({
-     origin: ['http://localhost:3000'],
-     methods:["GET","POST"],
-     credentials:true, 
- }))
+    origin: ['https://main.d15fr3rlairp7w.amplifyapp.com'],
+    methods: ["GET", "POST"],
+    credentials: true,
+}))
+
+// http://localhost:3000
 
 app.use("/", routeruser);
 app.use("/admin", routerAdmin)
@@ -39,9 +41,9 @@ app.use("/admin", routerAdmin)
 
 
 
- 
 
-const PORT =process.env.PORT || 6001
+
+const PORT = process.env.PORT || 6001
 // app.listen(PORT, ()=>console.log(`server port is ${PORT}`))
 
 const server = app.listen(PORT, (err) => {
@@ -55,24 +57,24 @@ const server = app.listen(PORT, (err) => {
 
 // /socket io setting 
 const io = new Server(server, {
-    cors:{
-        origin:'http://localhost:3000',
+    cors: {
+        origin: 'https://main.d15fr3rlairp7w.amplifyapp.com',
         // credentials:true
-        methods:['GET','POST']
+        methods: ['GET', 'POST']
     }
-} )
+})
 
 
 
-io.on('connection',(socket)=>{
+io.on('connection', (socket) => {
     console.log(`user Connect: ${socket.id}`);
-    socket.on('disconnect',()=>{
-        console.log('disconnect socketid',socket.id)
+    socket.on('disconnect', () => {
+        console.log('disconnect socketid', socket.id)
     })
-    socket.on('sendMessage',(data)=>{
-        console.log(data,',,,,,,,,,<<<')
+    socket.on('sendMessage', (data) => {
+        console.log(data, ',,,,,,,,,<<<')
         console.log(data.recieverId);
-        socket.broadcast.emit('receive_message',data)
+        socket.broadcast.emit('receive_message', data)
     })
 })
 
@@ -85,5 +87,5 @@ io.on('connection',(socket)=>{
 
 
 
-   
- 
+
+
