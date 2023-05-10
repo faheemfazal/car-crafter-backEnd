@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  googleAuthentication,
   login,
   signup,
   otpVerify,
@@ -35,6 +36,7 @@ import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
+router.post("/googleAuthentication", googleAuthentication);
 router.post("/number", login);
 router.post("/signup", signup);
 router.post("/otp", otpVerify);

@@ -4,6 +4,7 @@ import LocationDb from '../../models/locatin.js';
 import userDb from '../../models/userSchema.js'
 import orderDb from '../../models/orderSchema.js'
 import messageDb from '../../models/messageSchema.js'
+import mongoose from 'mongoose';
 
 
 export const hostData = async(req,res)=>{
@@ -49,9 +50,42 @@ export const hostList = async (req,res)=>{
         console.log(req.query);
         const Approved = await Cardb.find({owner:req.query.id,status:'Approved'})
         console.log(Approved);
-        const Orders = await orderDb.find({userData:req.query.id}).populate('carData')
-        console.log(Orders);
-        res.status(201).json({Approved,Orders})
+        // const Orders = await orderDb.find({userData:req.query.id}).populate('carData')
+       await orderDb.aggregate([
+            {
+              $lookup: {
+                from: 'cardbs',
+                localField: 'carData',
+                foreignField: '_id',
+                as: 'hosterDetails'
+              }
+            },
+            {
+              $unwind: '$hosterDetails'
+            },
+            {
+              $match: {
+                "hosterDetails.owner": new mongoose.Types.ObjectId(req.query.id),
+               
+              }
+            }, {
+                $lookup: {
+                  from: 'users',
+                  localField: 'userData',
+                  foreignField: '_id',
+                  as: 'ownerDetails'
+                }
+              },
+              {
+                $unwind: '$ownerDetails'
+              },
+          ]).then((Orders)=>{
+              console.log(Orders,'kkkkkkkkkkk');
+              res.status(201).json({Approved,Orders})
+
+          }).catch((err)=>{
+            console.log(err);
+          })
     }catch(err){
         console.log(err);
 
@@ -131,8 +165,12 @@ export const checkAcc =async (req,res)=>{
     const user = await userDb.findOne({_id:req.query.userId,bankAccount:{$exists:true}})
 
     console.log(user);
-    if(user) return res.status(201).json({user})
-    return res.status(501).json()
+    if(user) {
+         res.status(201).json({user})
+    }else{
+
+         res.status(501).json({})
+    }
    }catch{
 
    }

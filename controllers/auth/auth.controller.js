@@ -114,6 +114,30 @@ export const otpVerify = async (req,res)=>{
 }
 
 
+export const googleAuthentication = async(req,res)=>{
+  try{
+    console.log(req.body);
+    const user = await User.findOne({email:req.body.data.email})
+    console.log(user);
+    if(user){
+      console.log('sdfk');
+      const name = user.name 
+      const email = user.email
+      const id = user._id
+      console.log(id);
+      const number = user.number
+      const token =jwt.sign({id:id},process.env.JWT_SECRET,{expiresIn:86400})
+      res.status(200).json({auth:true,name,email,id,number,message:"Login success",token})
+    }else{
+      res.status(501).json({})
+    }
+
+  }catch{
+
+  }
+}
+
+
 
 
 
