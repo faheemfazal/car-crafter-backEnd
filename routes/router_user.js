@@ -18,7 +18,6 @@ import {
 import {
   getsutableLocation,
   getfindCar,
-  findDate,
   getcarDetails,
   createOrder,
   updateProfile,
@@ -44,7 +43,6 @@ router.post("/hostdata", hostData);
 router.get("/landinglocation", getLocation);
 router.get("/findlocation", getsutableLocation);
 router.get("/findCar", getfindCar);
-router.get("/getdate", findDate);
 router.get("/getcar", getcarDetails);
 router.post("/createOrder", createOrder);
 router.post("/updateprofile", verifyToken, updateProfile);

@@ -20,7 +20,7 @@ export function verifyOtp(number,otp){
         client.verify.v2
         .services(verifySid)
         .verificationChecks.create({ to: `+91${number}`, code: otp })
-         .then((verification_check) => {console.log(verification_check.status)
+         .then((verification_check) => {
          resolve(verification_check)})
          
         })
