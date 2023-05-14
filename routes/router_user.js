@@ -20,7 +20,7 @@ import {
   getfindCar,
   getcarDetails,
   createOrder,
-  updateProfile,
+  // updateProfile,
   orderDetails,
   cancelOrder,
   expandDate,
@@ -45,7 +45,7 @@ router.get("/findlocation", getsutableLocation);
 router.get("/findCar", getfindCar);
 router.get("/getcar", getcarDetails);
 router.post("/createOrder", createOrder);
-router.post("/updateprofile", verifyToken, updateProfile);
+// router.post("/updateprofile", verifyToken, updateProfile);
 router.get("/getOrderForUser", verifyToken, orderDetails);
 router.post("/cancelOrder", verifyToken, cancelOrder);
 router.post("/updateExpandDate", verifyToken, expandDate);

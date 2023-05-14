@@ -6,6 +6,7 @@ import userDb from "../../models/userSchema.js";
 import converSationDb from "../../models/converSation.js";
 // import messageDb from "../../../user/src/adminScreens/message.js/index.js";
 import messageDb from "../../models/messageSchema.js";
+import { login } from "../auth/auth.controller.js";
 
 export const getsutableLocation = async (req, res) => {
   try {
@@ -95,10 +96,10 @@ export const createOrder = async (req, res) => {
   } catch (e) {}
 };
 
-export const updateProfile = async (req, res) => {
-  try {
-  } catch (e) {}
-};
+// export const updateProfile = async (req, res) => {
+//   try {
+//   } catch (e) {}
+// };
 
 export const orderDetails = async (req, res) => {
   try {
@@ -250,6 +251,7 @@ export const getOldMessage = async (req, res) => {
 
 export const postProfile = async (req, res) => {
   try {
+    console.log(req.body);
     const newAccount = await userDb.findOneAndUpdate(
       { _id: req.body.userId },
       {
