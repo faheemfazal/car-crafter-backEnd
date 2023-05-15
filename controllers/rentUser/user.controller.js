@@ -103,12 +103,13 @@ export const createOrder = async (req, res) => {
 
 export const orderDetails = async (req, res) => {
   try {
+    console.log(req.userId,'..................');
     const orders = await orderDb
-      .find({ userData: req.query.id })
+      .find({ userData: req.userId })
       .populate("carData");
 
     res.status(201).json({ orders });
-  } catch (e) {}
+  } catch (e) {} 
 };
 
 export const cancelOrder = async (req, res) => {
@@ -134,7 +135,7 @@ export const cancelOrder = async (req, res) => {
       .then(async (response) => {
         await userDb
           .updateOne(
-            { _id: req.body.userId },
+            { _id: req.userId },
             {
               $inc: {
                 wallet: cancelAmount,

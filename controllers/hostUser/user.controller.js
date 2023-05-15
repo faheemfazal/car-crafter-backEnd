@@ -32,7 +32,7 @@ export const getLocation = async (req, res) => {
 export const hostList = async (req, res) => {
   try {
     const Approved = await Cardb.find({
-      owner: req.query.id,
+      owner: req.userId,
       status: "Approved",
     });
 
@@ -52,7 +52,7 @@ export const hostList = async (req, res) => {
         },
         {
           $match: {
-            "hosterDetails.owner": new mongoose.Types.ObjectId(req.query.id),
+            "hosterDetails.owner": new mongoose.Types.ObjectId(req.userId),
           },
         },
         {
@@ -77,7 +77,7 @@ export const hostList = async (req, res) => {
 export const postAccountdetails = async (req, res) => {
   try {
     const newAccount = await userDb.findOneAndUpdate(
-      { _id: req.body.id },
+      { _id: req.userId },
       {
         bankAccount: req.body,
       },
@@ -92,7 +92,7 @@ export const postAccountdetails = async (req, res) => {
 export const getAccount = async (req, res) => {
   try {
     const oldAccount = await userDb.findOne({
-      _id: req.query.id,
+      _id: req.userId,
       bankAccount: { $exists: true },
     });
 

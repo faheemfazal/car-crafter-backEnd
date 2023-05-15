@@ -7,14 +7,16 @@ export const verifyToken=async (req, res,next)=>{
       if(!header){
          res.status(401).send({error:'no token provider'})
       }
-      console.log(header,'hh');
+     
       const token = header.split(' ')[1]
-      console.log(token);
-      const verify = jwt.verify(token, process.env.JWT_SECRET,function(err,decoded){
+    
+       jwt.verify(token, process.env.JWT_SECRET,(err,decoded)=>{
+      
         if(err){
           console.log('/////');
           res.status(500).send({error:"authentication failed"})
         }else{
+          req.userId = decoded.id 
           next()
         }
       })
