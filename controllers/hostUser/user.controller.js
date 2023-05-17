@@ -91,6 +91,7 @@ export const postAccountdetails = async (req, res) => {
 
 export const getAccount = async (req, res) => {
   try {
+    console.log(req.userId);
     const oldAccount = await userDb.findOne({
       _id: req.userId,
       bankAccount: { $exists: true },
