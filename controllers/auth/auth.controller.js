@@ -6,7 +6,6 @@ import { sendOtp, verifyOtp } from "../../verification/otpVerify.js";
 export const login = async (req, res) => {
   try {
     const user = await User.findOne({ number: req.body.number });
-
     let data;
     if (user) {
       data = {
@@ -43,17 +42,15 @@ export const signup = async (req, res) => {
       const token = jwt.sign({ id: id }, process.env.JWT_SECRET, {
         expiresIn: 86400,
       });
-      res
-        .status(200)
-        .json({
-          auth: true,
-          name: name,
-          email: email,
-          id: id,
-          number: number,
-          message: "Login success",
-          token,
-        });
+      res.status(200).json({
+        auth: true,
+        name: name,
+        email: email,
+        id: id,
+        number: number,
+        message: "Login success",
+        token,
+      });
     }
   } catch (e) {}
 };
@@ -77,17 +74,15 @@ export const otpVerify = async (req, res) => {
           const token = jwt.sign({ id: id }, process.env.JWT_SECRET, {
             expiresIn: 86400,
           });
-          res
-            .status(200)
-            .json({
-              auth: true,
-              name,
-              email,
-              id,
-              number,
-              message: "Login success",
-              token,
-            });
+          res.status(200).json({
+            auth: true,
+            name,
+            email,
+            id,
+            number,
+            message: "Login success",
+            token,
+          });
         }
       } else {
         res.status(204).json({ message: "Incorrect Password" });
@@ -105,17 +100,15 @@ export const otpVerify = async (req, res) => {
             const token = jwt.sign({ id: id }, process.env.JWT_SECRET, {
               expiresIn: 86400,
             });
-            res
-              .status(200)
-              .json({
-                auth: true,
-                name: name,
-                email: email,
-                id: id,
-                number: number,
-                message: "Login success",
-                token,
-              });
+            res.status(200).json({
+              auth: true,
+              name: name,
+              email: email,
+              id: id,
+              number: number,
+              message: "Login success",
+              token,
+            });
           } else {
             res.status(204).json({ message: "Incorrect Otp" });
           }
@@ -138,17 +131,15 @@ export const googleAuthentication = async (req, res) => {
       const token = jwt.sign({ id: id }, process.env.JWT_SECRET, {
         expiresIn: 86400,
       });
-      res
-        .status(200)
-        .json({
-          auth: true,
-          name,
-          email,
-          id,
-          number,
-          message: "Login success",
-          token,
-        });
+      res.status(200).json({
+        auth: true,
+        name,
+        email,
+        id,
+        number,
+        message: "Login success",
+        token,
+      });
     } else {
       res.status(501).json({});
     }
